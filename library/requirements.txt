@@ -1,0 +1,6 @@
+Pillow
+Django[Argon]
+Bcrypt
+Pandas
+requests
+json
