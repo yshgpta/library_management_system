@@ -1,0 +1,113 @@
+.main_header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main_logo{
+    width: 150px;
+    height: auto;
+    margin: 10px;
+}
+.main_title{
+    font-size: 24px;
+    margin: 10px;
+}
+.main_title_lib{
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+}
+.navigation{
+    display: flex;
+    justify-content: center;
+}
+
+.search_box{
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.login_form{
+    width: 80%;
+    margin-top: 100px;
+}
+
+/* Slider */
+
+.arrival_text{
+    font-size: 32px;
+    text-align: center;
+}
+
+.slider_img{
+    width: 300px;
+    height: 350px;
+}
+
+ul{
+    list-style: none outside none;
+    padding-left: 0;
+    margin: 0;
+}
+.slider .item{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.clearfix{
+    max-width: 300px;
+}
+
+.lib_info{
+    text-align: center;
+}
+
+.download_form{
+    margin-top: 10em;
+}
+
+@media (min-width: 768px) {
+    .nav-item.right{
+        margin-left: 20em;
+    }
+}
+
+@media (max-width: 991px){
+    .slider_img{
+        width: 200px;
+        height: 250px;
+    }
+    .clearfix{
+        max-width: 200px;
+    }
+    .login_form{
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px){
+    .main_logo{
+        max-width: 100px;
+        margin: 5px;
+    }
+    .download_form{
+        margin-top: 2em;
+    }
+    .main_title{
+        font-size: 16px;
+    }
+    .slider_img{
+        width: 250px;
+        height: 300px;
+    }
+    .clearfix{
+        max-width: 250px;
+    }
+    .arrival_text{
+        font-size: 24px;
+    }
+}
+

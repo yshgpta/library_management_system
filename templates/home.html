@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    <link rel="stylesheet" href="{% static "css/lightslider.css" %}">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{% static "js/lightslider.js" %}"></script> 
+    <script>
+    	 $(document).ready(function() {
+			$("#content-slider").lightSlider({
+                loop:true,
+                keyPress:true
+            });
+            $('#image-gallery').lightSlider({
+                gallery:true,
+                item:1,
+                thumbItem:5,
+                slideMargin: 0,
+                speed:500,
+                auto:true,
+                loop:true,
+                onSliderLoad: function() {
+                    $('#image-gallery').removeClass('cS-hidden');
+                }  
+            });
+		});
+    </script>
+    <title>IIITL Library</title>
+</head>
+<body>
+    <div class="main_header"><img src="{% static "images/logo.png" %}" alt="Logo IIIT Lucknow" class="main_logo"/><div class="main_title">Central Library, Indian Institute of Information Technology, Lucknow<br>केंद्रीय पुस्तकालय, भारतीय सूचना प्रौद्योगिकी संस्थान, लखनऊ</div></div>
+    <!-- <div class="main_title_lib">CENTRAL LIBRARY<br>केंद्रीय पुस्तकालय</div> -->
+    <div class="navigation" style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Resources</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Services
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item right">
+                <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://iiitl.ac.in/">IIITL Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="" data-toggle="modal" data-target="#admin">Admin Login</a>
+          </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="modal fade" id="admin" tabindex="-1" role="dialog" aria-labelledby="adminTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Admin Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="{% url 'superuser_login' %}" method="POST">
+          <div class="modal-body">
+            {% csrf_token %}
+            <div class="form-group" style="padding: 20px 20px 0 20px;">
+              <label for="admin_username">Admin Username</label>
+              <input type="text" name="admin_username" class="form-control" id="admin_username" placeholder="Enter Admin Username">
+            </div>
+            <div class="form-group" style="padding: 0px 20px 0 20px">
+              <label for="admin_password">Password</label>
+              <input type="password" name="admin_password" class="form-control" id="admin_password" placeholder="Password">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="bg_image">
+        <img src="{% static "images/bg3.png" %}" alt="Library" width="100%">
+    </div>
+    <div class="search_box">
+        <form class="my-2 my-lg-0" action="{% url 'search_b' %}" method="GET">
+            <div style="display: flex;">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="search-by" id="inlineRadio1" value="title" checked>
+              <label class="form-check-label" for="inlineRadio1">Title</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="search-by" id="inlineRadio2" value="author">
+              <label class="form-check-label" for="inlineRadio2">Author</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="search-by" id="inlineRadio3" value="isbn">
+              <label class="form-check-label" for="inlineRadio3">ISBN</label>
+            </div>
+          </form>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form class="login_form" action="{% url 'std_login' %}" method="POST" style="border: 1px solid #bdc3c7;">
+            {% csrf_token %}
+            <div class="form-group" style="padding: 20px 20px 0 20px;">
+              <label for="roll_no">Roll Number</label>
+              <input type="text" name="roll_no" class="form-control" id="roll_no" placeholder="Enter Roll Number">
+            </div>
+            <div class="form-group" style="padding: 0px 20px 0 20px">
+              <label for="exampleInputPassword1">LDAP Password</label>
+              <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              <small id="registration_Help" class="form-text text-muted"><a href="#" data-toggle="modal" data-target="#exampleModalCenter">Not enrolled to library portal yet, register here!</a></small>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin: 20px">Log in</button>
+          </form>
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Library Registration Form</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form action="{% url 'register' %}" method="POST">
+                <div class="modal-body">
+                  {% csrf_token %}
+                  {{ user_form.as_p }}
+                  {{ std_profile_form.as_p }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+          <div class="download_form""> 
+            <a href="#">Book Lost Declaration Form</a><br>
+            <a href="#">Book Suggestion Form</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          
+          <div class="slider">
+            <div class="arrival_text">New Arrivals</div>
+            {% if new_books %}
+            <div class="item">            
+                <div class="clearfix">
+                    <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                      {% for book in new_books %}
+                        <li data-thumb="{{ book.1 }}">
+                            <form action="{% url 'book_detail' %}" method="GET">
+                              <input type="hidden" name='isbn_no' value={{ book.0 }}>
+                              <button style="border: hidden;" type="submit"><img class="slider_img" src="{{ book.1 }}" /></button>
+                            </form>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% else %}
+            <div>No new Book</div>
+            {% endif %}
+        </div>
+        <div class="lib_info">
+          <p style="padding-left:15px">
+            <b>Library Opening Hours :-</b>
+                <br>
+                Mon-Fri : 8:30 AM to 12 Midnight
+                <br>
+                Sat &amp; Breaks : 8:30 AM to 6 PM
+                <br>
+                During Exams-All days : till 12 Midnight (including Saturdays &amp; Sundays)
+            </p>
+            <p style="padding-left:15px">
+              <b>Issue/Return Hours :-</b>
+                  <br>
+                  Mon-Fri : 9 AM to 9 PM
+                  <br>
+                  Sat &amp; Breaks : 9 AM to 5:45 PM
+                  <br>
+              </p>
+        </div>	
+        
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

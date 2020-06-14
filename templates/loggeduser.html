@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    <link rel="stylesheet" href="{% static "css/loggeduser.css" %}">
+    <title>IIITL Library</title>
+</head>
+<body>
+    <div class="main_header"><img src="{% static "images/logo.png" %}" alt="Logo IIIT Lucknow" class="main_logo"/><div class="main_title">Central Library, Indian Institute of Information Technology, Lucknow<br>केंद्रीय पुस्तकालय, भारतीय सूचना प्रौद्योगिकी संस्थान, लखनऊ</div></div>
+    <!-- <div class="main_title_lib">CENTRAL LIBRARY<br>केंद्रीय पुस्तकालय</div> -->
+    <div class="navigation" style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'logout' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Resources</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Services
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item right">
+                <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://iiitl.ac.in/">IIITL Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout({{user.first_name}})</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="user_welcome">Welcome {{user.first_name}} {{user.last_name}} ({{user.username}})</div>
+    <div class="user_recommend_title">Recommended Book Based upon your current semester : {{curr_sem}}</div>
+
+    {% if b_recommend %}
+    <div class="container">
+        <div class="jumbotron">
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+              <!-- <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+              </ol> -->
+              
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                      {% for book in b_recommend.0 %}
+                        <div class="col-2"><img src={{ book.1 }} width="80px" height="auto" class="d-block w-100" alt={{book.0}}></div>
+                      {% endfor %}
+                    </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="row">
+                    {% for book in b_recommend.1 %}
+                      <div class="col-2"><img src={{ book.1 }} width="80px" height="auto" class="d-block w-100" alt={{book.0}}></div>
+                    {% endfor %}
+                    </div>
+                </div>
+                <!-- <div class="carousel-item">
+                  <div class="row">
+                    {% for book in b_recommend.2 %}
+                      <div class="col-3"><img src={{ book.1 }} width="80px" height="auto" class="d-block w-100" alt={{book.0}}></div>
+                    {% endfor %}
+                    </div>
+                </div> -->
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form class="issue_form" action="{% url 'issue_book' %}" method="POST" style="border: 1px solid #bdc3c7;">
+            {% csrf_token %}
+            <div class="form-group" style="padding: 20px 20px 0 20px;">
+              <label for="book_no">Book Number</label>
+              <input type="text" name="book_no" class="form-control" id="book_no" placeholder="Enter Book Number">
+              {% if message %}
+              <small class="form-text" style="color: red;">{{message}}</small>
+              {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin: 20px">Issue Book</button>
+          </form>
+          <form action="{% url 'checkout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" style="margin: 20px">Checkout</button>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div class="search_box">
+            <form class="my-2 my-lg-0" action="{% url 'search_b' %}" method="GET">
+                <div style="display: flex;">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="search-by" id="inlineRadio1" value="title" checked>
+                  <label class="form-check-label" for="inlineRadio1">Title</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="search-by" id="inlineRadio2" value="author">
+                  <label class="form-check-label" for="inlineRadio2">Author</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="search-by" id="inlineRadio3" value="isbn">
+                  <label class="form-check-label" for="inlineRadio3">ISBN</label>
+                </div>
+              </form>
+          </div>
+        </div>
+    </div>
+    {% if book_info or i_book %}
+    <table>
+        <tr>
+            <th>Book Number</th>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th></th>
+        </tr>
+        {% if i_book %}
+        {% for book in i_book %}
+        <form action="{% url 'delete_issue' %}" method="POST">
+          {% csrf_token %}
+          <tr>
+            <td>{{ book.0 }}</td>
+            <td>{{ book.1.isbn }}</td>
+            <td>{{ book.1.title }}</td>
+            <td>{{ book.1.author }}</td>
+            <td>
+              <input type="hidden" name='b_info' value={{ book.0 }}>
+              <button type="submit" class="btn btn-danger" style="margin: 20px">Delete</button></td>
+          </tr>
+        </form>
+        {% endfor %}
+        {% endif %}
+        {% if book_info %}
+        {% for book in book_info %}
+        <tr>
+            <td>{{ book.0 }}</td>
+            <td>{{ book.1.isbn }}</td>
+            <td>{{ book.1.title }}</td>
+            <td>{{ book.1.author }}</td>
+            <td><form action="{% url 'renewal' %}" method="POST">
+              {% csrf_token %}
+              <div style="display: flex; flex-direction: column; align-items: center;">
+              <input type="hidden" name='b_info' value={{ book.0 }}>
+              {% if book.3 %}
+                  <small style="color: red;">Current Fine Rs.{{ book.3 }}</small>
+              {% else %}
+                  {% if book.4 %}
+                      <small style="margin-bottom: -15px;">{{ book.4 }}/4</small>
+                      <button type="submit" class="btn btn-success" style="margin: 20px">Renew</button>
+                      <small style="margin-top: -15px;">{{ book.2 }} Days Left</small>
+                  {% else %}
+                      <small style="margin-bottom: -15px; color: red;">You have exhausted your renewal count for this book.</small>
+                      <button type="submit" class="btn btn-success" style="margin: 20px" disabled>Renew</button>
+                      <small style="margin-top: -15px;">{{ book.2 }} Days Left</small>
+                  {% endif %}
+              {% endif %}
+              </div></form></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+    {% else %}
+    <div>You haven't issued any book yet.</div>
+    {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
